@@ -1,10 +1,10 @@
 ##### Installation
 
-php composer.phar require pinba-server/pinba-server
+composer create-project name/package
 
 ##### Usage
 
-`php workerman_clickhouse.php start -d`
+`php pinba-server/workerman_clickhouse.php start -d`
 
 ##### Clickhouse
 
