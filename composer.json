@@ -1,0 +1,23 @@
+{
+    "name": "pinba-server/pinba-server",
+    "description": "simple pinba server with storage in clickhouse/loki",
+    "keywords": ["pinba", "server", "pinbaserver", "clickhouse", "loki", "worker", "swoole", "php"],
+    "version": "1.0.0",
+    "license": "MIT",
+    "homepage": "https://github.com/pinba-server/pinba-server",
+    "authors": [
+        {
+            "name": "morozovsk",
+            "homepage": "https://github.com/morozovsk",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/pinba-server/pinba-server/issues",
+        "source": "https://github.com/pinba-server/pinba-server"
+    },
+    "require": {
+        "workerman/workerman": "^3.5",
+        "google/protobuf": "^3.7"
+    }
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+package Pinba;
+option optimize_for = LITE_RUNTIME;
+
+message Request {
+	string hostname         =  1;
+	string server_name      =  2;
+	string script_name      =  3;
+	uint32 request_count    =  4;
+	uint32 document_size    =  5;
+	uint32 memory_peak      =  6;
+	float request_time      =  7;
+	float ru_utime          =  8;
+	float ru_stime          =  9;
+
+	repeated uint32 timer_hit_count  = 10;
+	repeated float timer_value       = 11;
+	repeated uint32 timer_tag_count  = 12;
+	repeated uint32 timer_tag_name   = 13;
+	repeated uint32 timer_tag_value  = 14;
+	repeated string dictionary       = 15;
+	uint32 status           = 16;
+	uint32 memory_footprint = 17;
+	repeated Request requests        = 18;
+	string schema           = 19;
+	repeated uint32 tag_name         = 20;
+	repeated uint32 tag_value        = 21;
+	repeated float timer_ru_utime    = 22;
+	repeated float timer_ru_stime    = 23;
+}
