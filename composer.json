@@ -2,7 +2,7 @@
     "name": "pinba-server/pinba-server",
     "description": "simple pinba server with storage in clickhouse/loki",
     "keywords": ["pinba", "server", "pinbaserver", "clickhouse", "loki", "workerman", "swoole", "php"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/pinba-server/pinba-server",
     "authors": [
