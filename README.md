@@ -13,6 +13,10 @@
 - `php pinba-server/workerman_clickhouse.php start -d`
 - `php pinba-server/workerman_clickhouse.php stop`
 
+##### Systemd autostart script
+- `sudo cp pinba-server/systemd/pinba-server.service /usr/lib/systemd/system/pinba-server.service`
+- `sudo systemctl daemon-reload && systemctl enable pinba-server && systemctl start pinba-server`
+
 ##### Stats for 1kk requests (24 hours with about 10 RPS):
 
 |table|rows|size, Mb|description|
@@ -20,9 +24,19 @@
 |requests|1kk|26|raw data|
 |report_by_all|56k|2|aggregated data by minutes|
 
+##### Info
+- pinba server uses 30002 port on 0.0.0.0
+- for better performance you can install php-extensions: `apt install php-pecl-protobuf php-pecl-event`
+- don't forget to install pinba client for php: `apt install php-pinba` and clickhouse
+
 ##### Grafana
 dashboard [#10011](https://grafana.com/dashboards/10011)
+
 ![grafana_dashboard.png](https://raw.githubusercontent.com/pinba-server/pinba-server/master/grafana_dashboard.png)
 
 ##### License
 MIT License.
+
+##### See also
+- [ClickHouse-Ninja/Proton](https://github.com/ClickHouse-Ninja/Proton) - golang version of pinba-server for clickhouse 
+- [olegfedoseev/pinba-influxdb](https://github.com/olegfedoseev/pinba-influxdb) - golang version of pinba-server for influxdb
