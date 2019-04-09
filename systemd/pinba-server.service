@@ -1,0 +1,16 @@
+[Unit]
+Description=Pinba server
+After=network.target
+
+[Service]
+User=www-data
+ExecStart=/usr/bin/php /var/www/pinba-server/workerman_clickhouse.php start
+
+Restart=always
+RestartSec=10
+
+MemoryLimit=200M
+MemoryAccounting=true
+
+[Install]
+WantedBy=multi-user.target
