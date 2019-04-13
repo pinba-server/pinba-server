@@ -35,7 +35,7 @@ $tcp_worker->onWorkerStart = function () use (&$request, &$jsonRows, &$config){
             if ($jsonRows) {
                 //echo "$jsonRows\n\n";
                 $r = file_get_contents("{$config['clickhouseUrl']}&query=INSERT%20INTO%20{$config['db.table']}%20FORMAT%20JSONEachRow", null,
-                    stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-Type: Content-type: text/plain', 'content' => $jsonRows, 'ignore_errors' => true]]));
+                    stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-type: text/plain', 'content' => $jsonRows, 'ignore_errors' => true]]));
                 //echo "$r\n\n";
                 $jsonRows = '';
             }
