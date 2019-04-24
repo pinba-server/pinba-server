@@ -1,10 +1,11 @@
 ##### Requirements
-- php (with composer)
+- php
 - clickhouse
 
 ##### Installation
 
-- `composer create-project pinba-server/pinba-server`
+- `git pull https://github.com/pinba-server/pinba-server.git`
+- `php composer.phar install`
 - `clickhouse-client -n < clickhouse/pinba.requests.sql`
 - `clickhouse-client -n < clickhouse/pinba.report_by_all.sql`
 
@@ -25,8 +26,8 @@
 |report_by_all|56k|2|aggregated data by minutes|
 
 ##### Info
-- pinba server uses 30002 port on 0.0.0.0
-- for better performance you can install php-extensions: `apt install php-pecl-protobuf php-pecl-event`
+- pinba server uses 30002 port on 127.0.0.1
+- for better performance you can install php-extensions: `apt install php-pecl-protobuf` and `pecl install event`
 - don't forget to install pinba client for php: `apt install php-pinba` and clickhouse
 
 ##### Grafana

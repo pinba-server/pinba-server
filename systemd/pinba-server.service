@@ -4,7 +4,8 @@ After=network.target
 
 [Service]
 User=www-data
-ExecStart=/usr/bin/php /var/www/pinba-server/workerman_clickhouse.php start
+WorkingDirectory=/var/www/pinba-server
+ExecStart=/usr/bin/php workerman_clickhouse.php start
 
 Restart=always
 RestartSec=10

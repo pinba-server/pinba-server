@@ -46,7 +46,7 @@ class PinbaWorker {
 
         Timer::add($this->timer, function() {
             if ($this->rows) {
-                //echo "$jsonRows\n\n";
+                //echo "$this->rows\n\n";
                 $r = file_get_contents("{$this->clickhouseUrl}&query=INSERT+INTO+{$this->clickhouseTable}+FORMAT+JSONEachRow", null,
                     stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-Type: text/plain', 'content' => $this->rows, 'ignore_errors' => true]]));
                 //echo "$r\n\n";
