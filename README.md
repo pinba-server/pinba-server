@@ -4,18 +4,20 @@
 
 ##### Installation
 
+- `cd /var/www`
 - `git pull https://github.com/pinba-server/pinba-server.git`
+- `cd pinba-server`
 - `php composer.phar install`
 - `clickhouse-client -n < clickhouse/pinba.requests.sql`
 - `clickhouse-client -n < clickhouse/pinba.report_by_all.sql`
 
 ##### Usage
 
-- `php pinba-server/workerman_clickhouse.php start -d`
-- `php pinba-server/workerman_clickhouse.php stop`
+- `php workerman_clickhouse.php start -d`
+- `php workerman_clickhouse.php stop`
 
 ##### Systemd autostart script
-- `sudo cp pinba-server/systemd/pinba-server.service /usr/lib/systemd/system/pinba-server.service`
+- `sudo cp systemd/pinba-server.service /usr/lib/systemd/system/pinba-server.service`
 - `sudo systemctl daemon-reload && systemctl enable pinba-server && systemctl start pinba-server`
 
 ##### Stats for 1kk requests (24 hours with about 10 RPS):
