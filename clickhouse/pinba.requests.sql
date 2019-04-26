@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS pinba;
+
 CREATE TABLE IF NOT EXISTS pinba.requests
 (
   hostname          String,
