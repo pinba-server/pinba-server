@@ -5,7 +5,7 @@
 ##### Installation
 
 - `cd /var/www`
-- `git pull https://github.com/pinba-server/pinba-server.git`
+- `git clone https://github.com/pinba-server/pinba-server.git`
 - `cd pinba-server`
 - `php composer.phar install`
 - `clickhouse-client -n < clickhouse/pinba.requests.sql`
