@@ -4,7 +4,7 @@
 
 ##### Installation
 
-- `cd /var/www`
+- `cd /opt`
 - `git clone https://github.com/pinba-server/pinba-server.git`
 - `cd pinba-server`
 - `php composer.phar install`
