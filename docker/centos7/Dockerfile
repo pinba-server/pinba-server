@@ -47,6 +47,12 @@ RUN cp /nginx-1.12.2/objs/ngx_http_pinba_module.so /usr/lib64/nginx/modules/ngx_
 
 RUN nginx -t
 
+#RUN cat /etc/php-fpm.d/www.conf | grep 9000
+#RUN sed -i 's|;pinba|pinba|g' /etc/php.d/40-pinba.ini
+#RUN cat /etc/php.d/40-pinba.ini
+#RUN sed -i 's|9000|9001|g' /etc/clickhouse-server/config.xml
+#RUN cat /etc/clickhouse-server/config.xml | grep 900
+
 CMD ["/bin/bash"]
 
 #systemctl daemon-reload

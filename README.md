@@ -9,7 +9,6 @@
 - `cd pinba-server`
 - `php composer.phar install`
 - `clickhouse-client -n < clickhouse/pinba.requests.sql`
-- `clickhouse-client -n < clickhouse/pinba.report_by_all.sql`
 
 ##### Usage
 
