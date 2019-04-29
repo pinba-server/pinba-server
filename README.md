@@ -19,12 +19,14 @@
 - `sudo cp systemd/pinba-server.service /usr/lib/systemd/system/pinba-server.service`
 - `sudo systemctl daemon-reload && systemctl enable pinba-server && systemctl start pinba-server`
 
-##### Stats for 1kk requests (24 hours with about 10 RPS):
+##### Stats for 24 hours with about 10 RPS on php-fpm and 450 RPS on nginx:
 
 |table|rows|size, Mb|description|
 |---|---|---|---|
 |requests|1kk|26|raw data|
 |report_by_all|56k|2|aggregated data by minutes|
+|nginx_requests|45kk|0|raw data, engine=null|
+|nginx_report_by_all|300k|9|aggregated data by minutes|
 
 ##### Info
 - publications: [reddit(en)](https://www.reddit.com/r/PHP/comments/bigszu/statistics_and_monitoring_of_php_scripts_in_real/), [habr(ru)](https://habr.com/ru/post/444610/)
