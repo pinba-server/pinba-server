@@ -3,14 +3,14 @@
     {
       "host": "127.0.0.1",
       "port": 30002,
-      "clickhouseUrl": "http:\/\/127.0.01:8123?user=default",
+      "clickhouseUrl": "http:\/\/127.0.0.1:8123?user=default",
       "clickhouseTable": "pinba.requests",
       "timer": 60
     },
     {
       "host": "127.0.0.1",
       "port": 30003,
-      "clickhouseUrl": "http:\/\/127.0.01:8123?user=default",
+      "clickhouseUrl": "http:\/\/127.0.0.1:8123?user=default",
       "clickhouseTable": "pinba.nginx_requests",
       "timer": 60
     }
