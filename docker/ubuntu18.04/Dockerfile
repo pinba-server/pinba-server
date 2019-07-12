@@ -44,8 +44,8 @@ RUN cd nginx-1.14.0 && ./configure --add-dynamic-module=/ngx_http_pinba_module -
 # fail!!! https://github.com/tony2001/ngx_http_pinba_module/issues/15
 RUN cd nginx-1.14.0 && make
 
-RUN cp /nginx-1.14.0/objs/ngx_http_pinba_module.so /usr/lib64/nginx/modules/ngx_http_pinba_module.so && \
-    echo 'load_module /usr/lib64/nginx/modules/ngx_http_pinba_module.so;' > /usr/share/nginx/modules/ngx_http_pinba_module.conf
+RUN cp /nginx-1.14.0/objs/ngx_http_pinba_module.so /usr/lib/nginx/modules/ngx_http_pinba_module.so && \
+    echo 'load_module /usr/lib/nginx/modules/ngx_http_pinba_module.so;' > /usr/share/nginx/modules/ngx_http_pinba_module.conf
 
 RUN nginx -t
 
