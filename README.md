@@ -43,3 +43,4 @@ MIT License.
 ##### See also
 - [ClickHouse-Ninja/Proton](https://github.com/ClickHouse-Ninja/Proton) - golang version of pinba-server for clickhouse 
 - [olegfedoseev/pinba-influxdb](https://github.com/olegfedoseev/pinba-influxdb) - golang version of pinba-server for influxdb
+- [nginxhouse](https://github.com/nginxhouse/nginxhouse) - nginx logs visualizer
