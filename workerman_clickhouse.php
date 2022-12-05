@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/Pinba/Request.php';
 require_once __DIR__ . '/GPBMetadata/Pinba.php';
@@ -12,23 +14,34 @@ if (!ini_get('date.timezone')) {
     ini_set('date.timezone', date_default_timezone_get()); //fix for workerman trouble with timezone
 }
 
-$config = json_decode(file_get_contents('config.json'), true);
+if (false === ($content = file_get_contents(__DIR__ . '/config.json'))) {
+    die('Fail load config');
+} else {
+    $config = json_decode($content, true);
+}
 
 $pinbaWorkers = [];
 
 foreach ($config['workers'] as $i => $workerConfig) {
-    $pinbaWorkers[$i] = new PinbaWorker($workerConfig['host'], $workerConfig['port'], $workerConfig['clickhouseUrl'], $workerConfig['clickhouseTable'], $workerConfig['timer']);
+    $pinbaWorkers[$i] = new PinbaWorker(
+        $workerConfig['host'],
+        $workerConfig['port'],
+        $workerConfig['clickhouseUrl'],
+        $workerConfig['clickhouseTable'],
+        $workerConfig['timer']
+    );
 }
 
 Worker::runAll();
 
-class PinbaWorker {
-    public $clickhouseUrl;
-    public $clickhouseTable;
+class PinbaWorker
+{
+    public string $clickhouseUrl = '';
+    public string $clickhouseTable = '';
     public $timer;
     public $worker;
     public $request;
-    public $rows = '';
+    public string $rows = '';
 
     public function __construct($host, $port, $clickhouseUrl, $clickhouseTable, $timer)
     {
@@ -41,15 +54,25 @@ class PinbaWorker {
         $this->timer = $timer;
     }
 
-    public function onWorkerStart() {
+    public function onWorkerStart()
+    {
         $this->request = new Request();
 
         Timer::add($this->timer, function() {
             if ($this->rows) {
-                //echo "$this->rows\n\n";
-                $r = file_get_contents("{$this->clickhouseUrl}&query=INSERT+INTO+{$this->clickhouseTable}+FORMAT+JSONEachRow", null,
-                    stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-Type: text/plain', 'content' => $this->rows, 'ignore_errors' => true]]));
-                //echo "$r\n\n";
+                file_get_contents(
+                    "{$this->clickhouseUrl}&query=INSERT+INTO+{$this->clickhouseTable}+FORMAT+JSONEachRow",
+                    false,
+                    stream_context_create([
+                        'http' => [
+                            'method'        => 'POST',
+                            'header'        => 'Content-Type: text/plain',
+                            'content'       => $this->rows,
+                            'ignore_errors' => true,
+                        ]
+                    ])
+                );
+
                 $this->rows = '';
             }
         });
@@ -59,11 +82,6 @@ class PinbaWorker {
     {
         $this->request->clear();
         $this->request->mergeFromString($data);
-
-        //echo $data . "\n";
-        //$json = $this->request->serializeToJsonString();
-        //echo "{$this->clickhouseTable}: $json\n\n";
-        //$data = json_decode($json);
 
         $row = [
             'hostname' => $this->request->getHostname(),
@@ -84,14 +102,14 @@ class PinbaWorker {
             'timers.tag_name' => [],
             'timers.tag_value' => [],
             'req_count' => $this->request->getRequestCount() ?: 1,
-            'timestamp' => date("Y-m-d H:i:s"),
+            'timestamp' => date('Y-m-d H:i:s'),
         ];
 
         $dictionary = $this->request->getDictionary();
         $tagNames = $this->request->getTagName();
         $tagValue = $this->request->getTagValue();
 
-        if (!empty($tagNames)) {
+        if ($tagNames) {
             foreach ($tagNames as $tagId => $tagName) {
                 $row['tags.name'][] = $dictionary[$tagName];
                 $row['tags.value'][] = $dictionary[$tagValue[$tagId]];
@@ -107,19 +125,22 @@ class PinbaWorker {
         if ($timerHitCounts->count()) {
             $timerTagId = 0;
             foreach ($timerHitCounts as $timerId => $timerHitCount) {
-                $row['timers.value'][]= $timerValue[$timerId];
-                $row['timers.hit_count'][]= $timerHitCount;
+                $row['timers.value'][] = $timerValue[$timerId];
+                $row['timers.hit_count'][] = $timerHitCount;
 
                 for ($i = 0; $i < $timerTagCount[$timerId]; $i++) {
-                    $row['timers.tag_name'][$timerId][]=$dictionary[$timerTagName[$timerTagId]];
-                    $row['timers.tag_value'][$timerId][]=$dictionary[$timerTagValue[$timerTagId]];
+                    $row['timers.tag_name'][$timerId][] = $dictionary[$timerTagName[$timerTagId]];
+                    $row['timers.tag_value'][$timerId][] = $dictionary[$timerTagValue[$timerTagId]];
 
                     $timerTagId++;
                 }
             }
         }
 
-        //var_export($row);
-        $this->rows .= json_encode($row) . "\n";
+        try {
+            $this->rows .= json_encode($row, JSON_THROW_ON_ERROR) . "\n";
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
     }
 }
